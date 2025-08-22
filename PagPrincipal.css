@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap');
+html{
+    font-size: 2.5vw;
+}
+
+@media screen and (min-width: 690px){
+    html{
+        font-size: 16px;
+    }
+}
+
+body {
+    font-family: Verdana;
+    font-weight: 250;
+    background-color: #ffffff;
+    height: 100vh;
+}
+
+header {
+    background-color: #7EA4EB;
+    display: flex;
+    padding: 0rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    color: #FFFFFF;
+    font-family: Dosis;
+    font-size: 3rem;
+}
+header div{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    width: 80%;
+}
+header input{
+    width: 100%;
+    height: min-content;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 3rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.usuario{
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border-radius: 100rem;
+    background-color: rgb(202, 202, 202);
+}
+
+#search-input::placeholder { color: #999;}
+
+main {
+    max-width: 100%;
+    padding: 2rem;
+    padding-top: 0;
+}
+
+.places-list h2 {
+    color: #555;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.place-card {
+    background-color: #e6e5e5;
+    border-radius: 1rem;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.place-flex{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    justify-content: space-between;
+}
+
+.place-info h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.place-info p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.tags-container{
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.tags-container span{
+    background-color: #EEF3FE;
+    color: #777;
+    padding: 0.4rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-container button{
+    padding: 0.8rem 1.6rem;
+    background-color: #7EA4EB;
+    color: white;
+    border-radius: 1rem;
+    outline: none;
+    border: none;
+    font-weight: 300;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

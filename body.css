@@ -1,0 +1,89 @@
+/* Estilos generales del cuerpo */
+body {
+    background-color: #A0C4FF; /* Color de fondo azul */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+}
+
+/* Estilos del contenedor del formulario */
+.form-container {
+    background-color: #FFFFFF; /* Fondo blanco */
+    padding: 40px 60px;
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    text-align: center;
+    max-width: 450px;
+}
+
+/* Estilos del encabezado */
+.header h1 {
+    font-size: 3rem;
+    color: #4C82C9; /* Color azul para el título principal */
+    margin-bottom: 5px;
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: #777; /* Color gris para el subtítulo */
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Estilos de las etiquetas y campos de entrada */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555; /* Color gris oscuro */
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 25rem;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Bordes redondeados */
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #f7f7f7; /* Fondo de campo gris claro */
+}
+
+/* Estilos del botón */
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #E0E0E0; /* Color gris del botón */
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #777; /* Color del texto del botón */
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para efecto 3D */
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #D3D3D3; /* Oscurece el botón al pasar el mouse */
+}
+
+/* Estilos del enlace inferior */
+.login-link {
+    display: block;
+    margin-top: 25px;
+    font-size: 1rem;
+}
+
+.login-link a {
+    color: #4C82C9; /* Color del enlace */
+    text-decoration: underline;
+    font-weight: bold;
+}
