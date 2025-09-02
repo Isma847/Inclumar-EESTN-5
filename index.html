@@ -25,7 +25,7 @@
         <section class="places-list">
             <div id="places-head">
                 <h2>Lugares Accesibles</h2>
-                <button id="Filtros">Filtros</button>
+                <button id="Filtros" onclick="abrirModal('filtros')">Filtros</button>
             </div>
             <div id="places-div"></div>
             
@@ -85,12 +85,56 @@
                         </div>
                 </template>
                 </div>
+                <button onclick="abrirModal('comentar')" style="margin-left: 1.5rem;">Dejar un comentario</button>
             </div>
 
         </section>
     </main>
+
+    <dialog id="comentar">
+        <div class="place-flex">
+            <div>
+                <h2>Compartir experiencia</h2>
+                <h3>ESTABLECIMIENTO</h3>
+            </div>
+            <button id="cerrar" onclick="cerrarModal('comentar')">x</button>
+        </div>
+        <div class="estrellas">
+            <img src="./Imagenes/estrella_vacia.png" alt="">
+            <img src="./Imagenes/estrella_vacia.png" alt="">
+            <img src="./Imagenes/estrella_vacia.png" alt="">
+            <img src="./Imagenes/estrella_vacia.png" alt="">
+            <img src="./Imagenes/estrella_vacia.png" alt="">
+        </div>
+        <textarea name="" id=""></textarea>
+        <br><button>Enviar</button>
+    </dialog>
+
+    <dialog id="filtros">
+        <div class="place-flex">
+            <h2>Filtros</h2>
+            <button id="cerrar" onclick="cerrarModal('filtros')">x</button>
+        </div>
+        <form autocomplete="off">
+            <label for="filtro1"><input name="filtro1" type="checkbox" value="Rampas" id="fil1"> Rampas</label><br>
+            <label for="filtro2"><input name="filtro2"type="checkbox" value="Personal capacitado" id="fil2"> Personal capacitado</label><br>
+            <label for="filtro3"><input name="filtro3" type="checkbox" value="Menú Braile" id="fil3"> Menú braile</label><br>
+        </form>
+    </dialog>
+
     <footer></footer>
     <script src="./js/mapa.js"></script>
     <script src="./js/Establecimientos.js"></script>
+    <script>
+        function abrirModal(modal){
+            var m = document.getElementById(modal)
+            m.showModal();
+        }
+
+        function cerrarModal(modal){
+            var m = document.getElementById(modal)
+            m.close()
+        }
+    </script>
     </body>
 </html>
