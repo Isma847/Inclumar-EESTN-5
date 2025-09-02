@@ -62,7 +62,7 @@ function renderizarEstablecimientos(lista) {
 searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const texto = searchInput.value.toLowerCase().trim();
-        console.log("Buscando:", texto);
+        checkboxes.forEach(cb => cb.checked = false);
 
         const filtrados = listaEstablecimientos.filter(est => {
             return (est.nombre || "").toLowerCase().includes(texto);
@@ -82,23 +82,54 @@ function mostrarDetalleEstablecimiento(est) {
     detalleUbicacion.textContent = est.ubicacion || "Ubicación desconocida";
 
     detalleEtiquetas.innerHTML = "";
-    if (est.etiquetas) {
-        est.etiquetas.split(",").forEach(tag => {
-            const span = document.createElement("span");
-            span.textContent = tag.trim();
-            detalleEtiquetas.appendChild(span);
-        });
-    }
+    if (Array.isArray(est.etiquetas)) {
+    est.etiquetas.forEach(tag => {
+        const span = document.createElement("span");
+        span.textContent = tag;
+        detalleEtiquetas.appendChild(span);
+    });
+  }
     placesDiv.innerHTML = "";
     document.getElementById("places-head").classList.add("hidden");
 
     detalleEstablecimiento.classList.remove("hidden");
-    
+
     if (window.focusOnMarker) {
         focusOnMarker(est.id);
     }
     cargarComentarios(est.id);
 }
+
+// Filtros por checkbox
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach(cb => {
+    cb.addEventListener("change", aplicarFiltros);
+});
+
+function aplicarFiltros() {
+    const filtrosSeleccionados = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value.toLowerCase());
+
+    console.log("Filtros seleccionados:", filtrosSeleccionados);
+
+    // 2. Filtrar la lista de establecimientos
+    let filtrados = listaEstablecimientos;
+
+    if (filtrosSeleccionados.length > 0) {
+        filtrados = listaEstablecimientos.filter(est => {
+            if (!est.etiquetas) return false;
+
+            if (!Array.isArray(est.etiquetas)) return false;
+            const etiquetas = est.etiquetas.map(e => e.toLowerCase());
+            return filtrosSeleccionados.some(f => etiquetas.includes(f));
+        });
+    }
+    detalleEstablecimiento.classList.add("hidden");
+    renderizarEstablecimientos(filtrados);
+}
+
 
 // Cargar comentarios
 async function cargarComentarios(idEstablecimiento) {
