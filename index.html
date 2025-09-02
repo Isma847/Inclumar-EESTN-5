@@ -25,7 +25,7 @@
         <section class="places-list">
             <div id="places-head">
                 <h2>Lugares Accesibles</h2>
-                <button onclick="abrirModal('filtros')">Filtros</button>
+                <button id="filtros" onclick="abrirModal('filtros')">Filtros</button>
             </div>
             <div id="places-div"></div>
             
@@ -110,10 +110,10 @@
         <br><button>Enviar</button>
     </dialog>
 
-    <dialog id="filtros">
+    <dialog id="filtrado">
         <div class="place-flex">
             <h2>Filtros</h2>
-            <button id="cerrar" onclick="cerrarModal('filtros')">x</button>
+            <button id="cerrar" onclick="cerrarModal('filtrado')">x</button>
         </div>
         <form autocomplete="off">
             <label for="filtro1"><input name="filtro1" type="checkbox" value="Rampas" id="fil1"> Rampas</label><br>
