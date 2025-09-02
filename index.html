@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lugares Accesibles - IncluMar</title>
+    <link
+      rel="stylesheet"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link rel="stylesheet" href="./css/PagPrincipal.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <header>
+      <div>
+        <a href="./index.html"><h1>IncluMar</h1></a>
+        <input type="text" id="search-input" placeholder="Buscar lugares..." />
+      </div>
+      <div class="usuario-container">
+        <span class="usuario-nombre" style="color: white; margin-right: 10px"
+          >Cargando...</span
+        >
+        <img
+          src="./Imagenes/usuario.png"
+          alt="Usuario"
+          class="usuario"
+          onclick="mostrarMenuUsuario()"
+        />
+
+        <div id="menu-usuario" class="menu-usuario hidden">
+          <p class="usuario-email"></p>
+          <button onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="mapa"></section>
+      <section class="places-list">
+        <div id="places-head">
+          <h2>Lugares Accesibles</h2>
+          <button id="Filtros">Filtros</button>
+        </div>
+        <div id="places-div"></div>
+
+        <template id="place-template">
+          <div class="place-card">
+            <div class="place-flex">
+              <div class="place-info">
+                <h3></h3>
+                <p class="category"></p>
+                <p class="address"></p>
+              </div>
+              <div class="btn-container"><button>Ver en el mapa</button></div>
+            </div>
+            <div class="tags-container"></div>
+          </div>
+        </template>
+
+        <div id="detalle-establecimiento" class="establecimiento hidden">
+          <div class="establecimiento-top">
+            <div class="establecimiento-flex">
+              <div>
+                <h2 id="detalle-nombre"></h2>
+                <p id="detalle-tipo"></p>
+                <p id="detalle-ubicacion"></p>
+              </div>
+              <div id="calificacion">
+                <img src="./Imagenes/estrella_vacia.png" alt="" />
+                <img src="./Imagenes/estrella_vacia.png" alt="" />
+                <img src="./Imagenes/estrella_vacia.png" alt="" />
+                <img src="./Imagenes/estrella_vacia.png" alt="" />
+                <img src="./Imagenes/estrella_vacia.png" alt="" />
+              </div>
+            </div>
+            <div id="detalle-etiquetas" class="establecimiento-etiquetas"></div>
+          </div>
+          <div class="establecimiento-btn">
+            <button>Ver en el mapa</button>
+            <button>Contacto</button>
+          </div>
+          <h2>Experiencias de los usuarios</h2>
+          <div id="detalle-comentarios" class="comentarios-container">
+            <p style="padding: 0 1.5rem">
+              (Próximamente: comentarios de usuarios)
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer></footer>
+
+    <script src="./js/authGuard.js"></script>
+    <script src="./js/mapa.js"></script>
+    <script src="./js/Establecimientos.js"></script>
+
+    <script>
+      function mostrarMenuUsuario() {
+        const menu = document.getElementById("menu-usuario");
+        menu.classList.toggle("hidden");
+      }
+
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu-usuario");
+        const usuarioImg = document.querySelector(".usuario");
+
+        if (!usuarioImg.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+/* Estilos generales del cuerpo */
+body {
+  background-color: #7ea4eb; /* Color de fondo azul */
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Estilos del encabezado */
+.header h1 {
+  font-size: 3rem;
+  color: #ffffff; /* Color azul para el título principal */
+  margin-bottom: 5px;
+}
+.header {
+  text-align: center;
+}
+.header p {
+  font-size: 1.2rem;
+  color: #ffffff; /* Color gris para el subtítulo */
+  margin-top: 0;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Estilos de las etiquetas y campos de entrada */
+.form-group {
+  margin-bottom: 15px;
+  width: 50vh;
+  margin-left: 70vh;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ffffff; /* Color gris oscuro */
+  font-weight: bold;
+}
+
+.form-group input {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px; /* Bordes redondeados */
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: #f7f7f7; /* Fondo de campo gris claro */
+  width: 70vh;
+}
+
+/* Estilos del botón */
+button {
+  width: 50vh;
+  margin-left: 80vh;
+  padding: 15px;
+  background-color: #d9d9d9; /* Color gris del botón */
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000000; /* Color del texto del botón */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para efecto 3D */
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #d3d3d3; /* Oscurece el botón al pasar el mouse */
+}
+
+/* Estilos del enlace inferior */
+.login-link {
+  display: block;
+  margin-top: 2em;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.login-link a {
+  color: #4c82c9; /* Color del enlace */
+  text-decoration: underline;
+  font-weight: bold;
+  text-decoration: none;
+}
