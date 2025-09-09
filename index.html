@@ -45,12 +45,14 @@
         </div>
       </div>
     </header>
+
     <main>
       <section id="mapa"></section>
+
       <section class="places-list">
         <div id="places-head">
           <h2>Lugares Accesibles</h2>
-          <button id="Filtros">Filtros</button>
+          <button id="Filtros" onclick="abrirModal('filtrado')">Filtros</button>
         </div>
         <div id="places-div"></div>
 
@@ -62,7 +64,7 @@
                 <p class="category"></p>
                 <p class="address"></p>
               </div>
-              <div class="btn-container"><button>Ver en el mapa</button></div>
+              <div class="btn-container"><button>Ver más</button></div>
             </div>
             <div class="tags-container"></div>
           </div>
@@ -90,15 +92,101 @@
             <button>Ver en el mapa</button>
             <button>Contacto</button>
           </div>
-          <h2>Experiencias de los usuarios</h2>
+
+          <h2>Reseñas de usuarios</h2>
           <div id="detalle-comentarios" class="comentarios-container">
-            <p style="padding: 0 1.5rem">
-              (Próximamente: comentarios de usuarios)
+            <template id="comentario-template">
+              <div class="comentario">
+                <div class="comentario-usuario">
+                  <img
+                    src="./Imagenes/usuario.png"
+                    alt=""
+                    class="pfp-usuario"
+                  />
+                  <div class="nombre-usuario"></div>
+                </div>
+                <div class="comentario-info">
+                  <div class="estrellas"></div>
+                  <div class="fecha"></div>
+                </div>
+                <p class="texto-comentario"></p>
+                <div class="comentario-acciones">
+                  <button class="btn-like">
+                    <span class="like-icon">👍</span>
+                    <span class="like-count">0</span>
+                  </button>
+                </div>
+              </div>
+            </template>
+
+            <p style="padding: 0 1.5rem" id="sin-comentarios">
+              Aún no hay reseñas para este lugar.
             </p>
           </div>
+          <button onclick="abrirModal('comentar')" style="margin-left: 1.5rem">
+            Escribir reseña
+          </button>
         </div>
       </section>
     </main>
+
+    <dialog id="comentar">
+      <div class="modal-header">
+        <h2>Escribir reseña</h2>
+        <button onclick="cerrarModal('comentar')">×</button>
+      </div>
+      <div class="modal-content">
+        <h3 id="modal-establecimiento-nombre">ESTABLECIMIENTO</h3>
+        <p>Califica tu experiencia:</p>
+        <div class="estrellas" id="estrellas-calificacion">
+          <img src="./Imagenes/estrella_vacia.png" alt="" data-value="1" />
+          <img src="./Imagenes/estrella_vacia.png" alt="" data-value="2" />
+          <img src="./Imagenes/estrella_vacia.png" alt="" data-value="3" />
+          <img src="./Imagenes/estrella_vacia.png" alt="" data-value="4" />
+          <img src="./Imagenes/estrella_vacia.png" alt="" data-value="5" />
+        </div>
+        <textarea
+          id="comentario-texto"
+          placeholder="Comparte tu experiencia en este lugar..."
+        ></textarea>
+        <button onclick="enviarComentario()">Enviar reseña</button>
+      </div>
+    </dialog>
+
+    <dialog id="filtrado">
+      <div class="modal-header">
+        <h2>Filtros de búsqueda</h2>
+        <button onclick="cerrarModal('filtrado')">×</button>
+      </div>
+      <div class="modal-content">
+        <form id="form-filtros">
+          <label>
+            <input type="checkbox" value="Rampas" /> Rampas de acceso
+          </label>
+          <label>
+            <input type="checkbox" value="Personal capacitado" /> Personal
+            capacitado
+          </label>
+          <label>
+            <input type="checkbox" value="Menú Braile" /> Menú en braile
+          </label>
+          <label>
+            <input type="checkbox" value="Baños adaptados" /> Baños adaptados
+          </label>
+          <label>
+            <input type="checkbox" value="Estacionamiento reservado" />
+            Estacionamiento reservado
+          </label>
+        </form>
+        <div class="modal-actions">
+          <button onclick="aplicarFiltros()">Aplicar filtros</button>
+          <button onclick="limpiarFiltros()" class="btn-secondary">
+            Limpiar
+          </button>
+        </div>
+      </div>
+    </dialog>
+
     <footer></footer>
 
     <script src="./js/authGuard.js"></script>
@@ -106,19 +194,156 @@
     <script src="./js/Establecimientos.js"></script>
 
     <script>
+      console.log("🚀 Cargando script principal del index...");
+
+      function abrirModal(modal) {
+        console.log("Abriendo modal:", modal);
+        const m = document.getElementById(modal);
+        if (!m) {
+          console.error("Modal no encontrado:", modal);
+          return;
+        }
+
+        if (modal === "comentar" && window.establecimientoActual) {
+          const nombreElement = document.getElementById(
+            "modal-establecimiento-nombre"
+          );
+          if (nombreElement) {
+            nombreElement.textContent =
+              window.establecimientoActual.nombre || "ESTABLECIMIENTO";
+          }
+        }
+
+        try {
+          m.showModal();
+          console.log("✅ Modal abierto:", modal);
+        } catch (error) {
+          console.error("Error al abrir modal:", error);
+        }
+      }
+
+      function cerrarModal(modal) {
+        console.log("Cerrando modal:", modal);
+        const m = document.getElementById(modal);
+        if (!m) {
+          console.error("Modal no encontrado:", modal);
+          return;
+        }
+
+        try {
+          m.close();
+
+          if (modal === "comentar") {
+            const textArea = document.getElementById("comentario-texto");
+            if (textArea) textArea.value = "";
+
+            if (typeof window.calificacionSeleccionada !== "undefined") {
+              window.calificacionSeleccionada = 0;
+            }
+
+            if (typeof window.actualizarEstrellas === "function") {
+              window.actualizarEstrellas();
+            }
+          }
+
+          console.log("✅ Modal cerrado:", modal);
+        } catch (error) {
+          console.error("Error al cerrar modal:", error);
+        }
+      }
+
+      function configurarEstrellasModal() {
+        const estrellas = document.querySelectorAll(
+          "#estrellas-calificacion img"
+        );
+
+        estrellas.forEach((estrella, index) => {
+          estrella.addEventListener("click", () => {
+            window.calificacionSeleccionada = index + 1;
+            mostrarEstrellasModal(window.calificacionSeleccionada);
+            console.log(
+              "Calificación seleccionada:",
+              window.calificacionSeleccionada
+            );
+          });
+
+          estrella.addEventListener("mouseover", () => {
+            mostrarEstrellasModal(index + 1);
+          });
+        });
+
+        const contenedor = document.getElementById("estrellas-calificacion");
+        if (contenedor) {
+          contenedor.addEventListener("mouseleave", () => {
+            mostrarEstrellasModal(window.calificacionSeleccionada || 0);
+          });
+        }
+      }
+
+      function mostrarEstrellasModal(cantidad) {
+        const estrellas = document.querySelectorAll(
+          "#estrellas-calificacion img"
+        );
+        estrellas.forEach((estrella, index) => {
+          estrella.src =
+            index < cantidad
+              ? "./Imagenes/estrella_llena.png"
+              : "./Imagenes/estrella_vacia.png";
+        });
+      }
+
       function mostrarMenuUsuario() {
+        console.log("mostrarMenuUsuario llamada");
         const menu = document.getElementById("menu-usuario");
-        menu.classList.toggle("hidden");
+        if (menu) {
+          menu.classList.toggle("hidden");
+          console.log(
+            "Menu toggled, hidden:",
+            menu.classList.contains("hidden")
+          );
+        } else {
+          console.error("Elemento menu-usuario no encontrado");
+        }
       }
 
       document.addEventListener("click", function (event) {
         const menu = document.getElementById("menu-usuario");
         const usuarioImg = document.querySelector(".usuario");
-
-        if (!usuarioImg.contains(event.target)) {
+        if (usuarioImg && menu && !usuarioImg.contains(event.target)) {
           menu.classList.add("hidden");
         }
       });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("🚀 Inicializando script principal...");
+
+        setTimeout(() => {
+          configurarEstrellasModal();
+          console.log("✅ Estrellas del modal configuradas");
+        }, 500);
+
+        console.log("Verificando elementos:");
+        console.log(
+          "- menu-usuario:",
+          !!document.getElementById("menu-usuario")
+        );
+        console.log("- places-div:", !!document.getElementById("places-div"));
+        console.log("- mapa:", !!document.getElementById("mapa"));
+        console.log(
+          "- search-input:",
+          !!document.getElementById("search-input")
+        );
+        console.log("- modal comentar:", !!document.getElementById("comentar"));
+        console.log("- modal filtrado:", !!document.getElementById("filtrado"));
+      });
+
+      window.abrirModal = abrirModal;
+      window.cerrarModal = cerrarModal;
+      window.mostrarMenuUsuario = mostrarMenuUsuario;
+      window.configurarEstrellasModal = configurarEstrellasModal;
+      window.mostrarEstrellasModal = mostrarEstrellasModal;
+
+      console.log("✅ Script principal del index cargado correctamente");
     </script>
   </body>
 </html>
